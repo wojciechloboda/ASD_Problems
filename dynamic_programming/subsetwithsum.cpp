@@ -5,7 +5,7 @@
 #include<iostream>
 #include<vector>
 
-using namespace std;fsdfsdfsd
+using namespace std;
 
 bool subsetsum(vector<int>& v, int n, int sum){
   vector<vector<bool>> F(sum + 1, vector<bool>(n + 1));

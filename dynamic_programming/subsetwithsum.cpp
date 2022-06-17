@@ -1,5 +1,6 @@
-//given a vector o n integers, check if given s can be a sum of a subset of vector elements
-//solution with reconstructing subset
+//Given a vector o n integers, check if given s can be a sum of a subset of vector elements
+//Solution with reconstructing subset
+
 
 #include<iostream>
 #include<vector>

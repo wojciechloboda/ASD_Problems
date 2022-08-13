@@ -8,6 +8,9 @@
 Implementation of Edmonds-Karp algorithm for finding a Max-Flow with Graph represented as an adjacency matrix
 */
 
+struct Edge{
+    int v, weight;
+};
 
 void BFS(std::vector<std::vector<int>> &G, std::vector<int> &parents, int s)
 {
@@ -52,6 +55,8 @@ int edmonds_karp(std::vector<std::vector<int>>& G, int s, int t){
         }
     }
 
+
+
     while(true)
     {
         BFS(residual, parents, s);
@@ -85,6 +90,42 @@ int edmonds_karp(std::vector<std::vector<int>>& G, int s, int t){
     return res;
 }
 
+/*
+Finding association in bipartite graph using edmonds-karp
+*/
+
+void convert(std::vector<std::vector<Edge>> &Graph, std::vector<std::vector<int>> &G){
+    int n = (int)Graph.size();
+
+    for(int v = 0; v < n; ++v){
+        for(auto& element : Graph[v]){
+            G[v][element.v] = element.weight;
+        }
+    }
+}
+
+int find_association(std::vector<std::vector<Edge>> &Graph){
+    int n = (int)Graph.size();
+    std::vector<std::vector<int>> G(n + 2, std::vector<int>(n + 2));
+
+    int A = n;
+    int B = n + 1;
+
+    Graph.emplace_back();
+    Graph.emplace_back();
+
+    for(int i = 0; i < n / 2; ++i){
+        Graph[A].push_back({i, 1});
+        Graph[i + n / 2].push_back({B, 1});
+    }
+
+    convert(Graph, G);
+
+    return edmonds_karp(G, n, n + 1);
+}
+
+
+
 
 int main(int, char**) {
     std::vector<std::vector<int>> G = {
@@ -99,5 +140,18 @@ int main(int, char**) {
             {0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
+    //Bipartite graph
+    std::vector<std::vector<Edge>> Graph = {
+            {{4, 1}, {6, 1}},
+            {{5, 1}, {7, 1}},
+            {{6, 1}},
+            {{6, 1}},
+            {},
+            {},
+            {},
+            {}
+    };
+
     std::cout << edmonds_karp(G, 0, 8) << std::endl;
+    std::cout << find_association(Graph);
 }

@@ -84,7 +84,7 @@ void free_list(Node* head){
     head = tmp;
   }
 }
-
+#KOMentazr
 int main(){
   Node* head = new Node(0);
   head = insert(head, new Node(15));
